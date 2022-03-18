@@ -6,6 +6,7 @@ import vertexShader from "./vertex.glsl";
 
 class World {
   constructor() {
+    this.time = 0;
     this.container = document.querySelector("#canvas");
     this.width = this.container.offsetWidth;
     this.height = this.container.offsetHeight;
