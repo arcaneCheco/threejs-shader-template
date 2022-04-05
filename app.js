@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Pane } from "tweakpane";
 import fragmentShader from "./fragment.glsl";
+// import fragmentShader from "./fragmentRayMarchStarter.glsl";
 import vertexShader from "./vertex.glsl";
 
 class World {
@@ -25,8 +26,10 @@ class World {
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.camera.position.z = 1;
     this.debug = new Pane();
+    this.textureLoader = new THREE.TextureLoader();
     window.addEventListener("resize", this.resize.bind(this));
     this.addObject();
+    this.resize();
     this.render();
   }
 
@@ -38,6 +41,7 @@ class World {
       fragmentShader,
       uniforms: {
         uTime: { value: 0 },
+        uAspect: { value: this.width / this.height },
       },
       transparent: true,
     });
@@ -57,6 +61,8 @@ class World {
     // this.mesh.scale.set(this.width, this.height, 1);
 
     this.camera.updateProjectionMatrix();
+
+    this.material.uniforms.uAspect.value = this.width / this.height;
   }
 
   update() {}
